@@ -1,0 +1,9 @@
+.error__container {
+	text-align: center;
+	margin-top: 10%;
+	font-size: 30px;
+}
+
+.error__container p {
+	font-size: 24px;
+}
