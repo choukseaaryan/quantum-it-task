@@ -23,14 +23,18 @@ const HomePage = () => {
 	const [filteredData, setFilteredData] = useState([]);
 
 	const userData = useSelector((state) => state?.user?.users);
+	const totalPages = Math.ceil(filteredData?.length / limit);
+	const startIndex = (currentPage - 1) * limit;
+	const endIndex = startIndex + limit;
+	const currentItems = filteredData?.slice(startIndex, endIndex);
+
 	// const data = Array.from({ length: 100 }, (_, i) => ({
 	// 	id: i + 1,
 	// 	name: `User ${i + 1}`,
 	// 	email: `user${i + 1}@example.com`,
 	// 	phone: `123456789${i + 1}`,
 	// }));
-
-	const totalPages = Math.ceil(filteredData?.length / limit);
+	
 
 	const handlePageChange = (event) => {
 		setCurrentPage(Number(event.target.value));
@@ -46,14 +50,16 @@ const HomePage = () => {
 		setSort(e.target.value);
 	};
 
-	const startIndex = (currentPage - 1) * limit;
-	const endIndex = startIndex + limit;
-	const currentItems = filteredData?.slice(startIndex, endIndex);
-
 	const handleSearch = (e) => {
 		setSearch(e.target.value);
 	};
 
+	const handleLogout = () => {
+		sessionStorage.removeItem("profileInfo");
+		localStorage.removeItem("profileInfo");
+		navigate("/login");
+	};
+	
 	useEffect(() => {
 		dispatch(GET_USERS({ str: search, sort }));
 		setCurrentPage(1);
@@ -104,6 +110,9 @@ const HomePage = () => {
 						<option value="inserted">Last Inserted</option>
 					</select>
 				</div>
+				<button className={styles.logout__btn} onClick={handleLogout}>
+					Logout
+				</button>
 			</div>
 			<div className={styles.dashboard__container__body}>
 				{filteredData ? (

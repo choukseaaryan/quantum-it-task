@@ -4,6 +4,7 @@ const NoDataComponent = () => {
   return (
     <div style={
       {
+        "color": "white",
         "display": "flex",
         "justifyContent": "center",
         "alignItems": "center",
